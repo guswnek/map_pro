@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.12'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'chuncheon'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '1.8'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    configureEach {
+        cf -> cf.exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-logging')
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.egovframe.go.kr/maven/'
+    }
+}
+
+ext {
+    egovframeRteVersion = '4.2.0'
+}
+
+dependencies {
+    // SpringBoot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // SpringBoot DevTools
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    // SpringBoot Validation
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+    // SpringBoot AOP
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+
+    // Egov Framework
+    implementation "org.egovframe.rte:org.egovframe.rte.fdl.cmmn:${egovframeRteVersion}"
+    implementation "org.egovframe.rte:org.egovframe.rte.fdl.logging:${egovframeRteVersion}"
+    implementation ("org.egovframe.rte:org.egovframe.rte.ptl.mvc:${egovframeRteVersion}") {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    implementation "org.egovframe.rte:org.egovframe.rte.psl.dataaccess:${egovframeRteVersion}"
+
+    // log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+   // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+/*
+    // mybatis
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.3.2'
+
+    // jdbc
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // log4jdbc
+    implementation 'com.googlecode.log4jdbc:log4jdbc:1.2'
+
+    // pageHelper
+    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '2.1.0'*/
+
+    // org.apache.commons.io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
+
+
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
