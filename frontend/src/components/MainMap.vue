@@ -1,33 +1,46 @@
 <template>
-  <div class="main-map">
+  <div class="main-map" id="map">
 
   </div>
 </template>
 
-<script>
+<script setup>
 import {onMounted} from "vue";
-import OlLayerTile from 'ol/layer/Tile.js';
-import OlView from 'ol/View.js';
-import OlMap from 'ol/Map.js';
-import OSM from 'ol/source/OSM';
-import {fromLonLat} from 'ol/proj.js'
+// 지도와 관련된 모듈은 node_modules에 위치해있는 ol 폴도에 있는 기능 중 필요한 것을 import
+import OlLayerTile from 'ol/layer/Tile.js'; // Tile Layer
+import OlView from 'ol/View.js'; // View
+import OlMap from 'ol/Map.js'; // Map
+import OSM from 'ol/source/OSM'; // OpenStreetMap 소스
+import { fromLonLat } from 'ol/proj.js'; // 좌표 변환
+import {defaults} from 'ol/control.js'
 
-let olMap = undefined;
+let olMap = null;
 
 onMounted(() => {
-  olMap = new olMap({
-    target: this.$refs.map,
+
+  const mapElement = document.getElementById("map");
+
+  olMap = new OlMap({
+    target: mapElement, // ref로 참조된 DOM 요소
+    controls: defaults({  // 정의된 각 버튼 및 속성
+      attribution: false,
+      zoom: false,
+      rotate: false
+    }),
     layers: [
       new OlLayerTile({
-        source: new OSM()
-      })
+        source: new OSM(),
+      }),
     ],
-    view : new OlView({
-      center: fromLonLat([127.1388684, 37.4449168]), // 경기도 성남
-      zoom: 10
-    })
-  })
+    view: new OlView({
+      center: fromLonLat([127.1388684, 37.4449168]), // 경기도 성남 좌표
+      zoom: 10,
+    }),
+  });
+
+  console.log(olMap.value.getView().getZoom()); // 현재 줌 레벨 확인
 })
+
 </script>
 
 <style scoped>
