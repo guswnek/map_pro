@@ -12,16 +12,16 @@ import OlView from 'ol/View.js'; // View
 import OlMap from 'ol/Map.js'; // Map
 import OSM from 'ol/source/OSM'; // OpenStreetMap 소스
 import { fromLonLat } from 'ol/proj.js'; // 좌표 변환
-import {defaults} from 'ol/control.js'
+import { defaults } from 'ol/control.js'
 
-let olMap = null;
+let olMap = null; //eslint-disable-line no-unused-vars
 
 onMounted(() => {
 
   const mapElement = document.getElementById("map");
 
   olMap = new OlMap({
-    target: mapElement, // ref로 참조된 DOM 요소
+    target: mapElement,           // ref로 참조된 DOM 요소
     controls: defaults({  // 정의된 각 버튼 및 속성
       attribution: false,
       zoom: false,
@@ -38,7 +38,6 @@ onMounted(() => {
     }),
   });
 
-  console.log(olMap.value.getView().getZoom()); // 현재 줌 레벨 확인
 })
 
 </script>

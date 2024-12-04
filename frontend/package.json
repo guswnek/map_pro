@@ -10,7 +10,8 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "ol": "^10.3.0",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-resizable": "^2.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
