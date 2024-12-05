@@ -14,7 +14,7 @@
         </div>
         <div class="location-info-area">
           <i class="fa-solid fa-location-dot"></i>
-          <input placeholder="위치 정보 직접 입력하기" :value="props.address"/>
+          <input placeholder="위치 정보 직접 입력하기"/>
         </div>
         <div class="rate-area">
           <StarRating v-model="userRating" :max-stars="5" @ratingData = "updateRating" />
@@ -40,12 +40,17 @@
 
 import VueResizable from 'vue-resizable';
 import StarRating from 'vue3-star-ratings';
-import {defineProps, ref} from "vue";
-
-const props = defineProps(['address']);
+import {onMounted, ref} from "vue";
+import { emitter } from '../eventBus'; // Mitt 이벤트 버스
 
 let isVisibleSideBar = ref(true);
 let userRating = ref(0);
+
+onMounted(() => {
+  emitter.on("sendAddress", (addr) => {
+    console.log(addr);
+  });
+})
 
 function showSideBar() {
   isVisibleSideBar.value = !isVisibleSideBar.value;

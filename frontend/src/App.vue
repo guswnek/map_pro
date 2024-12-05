@@ -1,21 +1,14 @@
 <template>
   <div id = "app">
-    <MainMap @send-address="handleAddress"/>
-    <SideBar :address="address" class="side-bar"/>
+    <MainMap />
+    <SideBar class="side-bar"/>
   </div>
 </template>
 
 <script setup>
 import MainMap from '@/components/MainMap'
 import SideBar from '@/components/SideBar'
-import {ref} from "vue";
 
-let address = ref(null);
-
-function handleAddress(addr){
-  console.log("parent addres : " + addr);
-  address.value = addr;
-}
 </script>
 
 <style>
