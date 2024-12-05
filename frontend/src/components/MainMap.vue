@@ -5,16 +5,23 @@
 </template>
 
 <script setup>
-import {onMounted} from "vue";
+
+import {defineEmits, onMounted, ref} from "vue";
 // 지도와 관련된 모듈은 node_modules에 위치해있는 ol 폴도에 있는 기능 중 필요한 것을 import
 import OlLayerTile from 'ol/layer/Tile.js'; // Tile Layer
 import OlView from 'ol/View.js'; // View
 import OlMap from 'ol/Map.js'; // Map
 import OSM from 'ol/source/OSM'; // OpenStreetMap 소스
-import { fromLonLat } from 'ol/proj.js'; // 좌표 변환
+import { fromLonLat, toLonLat } from 'ol/proj.js'; // 좌표 변환
 import { defaults } from 'ol/control.js'
+import axios from "axios";
+
+const emit = defineEmits(["send-address"]);
+
 
 let olMap = null; //eslint-disable-line no-unused-vars
+let address = ref(null);
+console.log("child_addr : " + address.value);
 
 onMounted(() => {
 
@@ -38,7 +45,29 @@ onMounted(() => {
     }),
   });
 
+  olMap.on('click', (e) => {
+    const lonLan = toLonLat(e.coordinate);
+    const lon = lonLan[0];
+    const lat = lonLan[1];
+    getAddress(lon, lat);
+
+  })
+
 })
+
+function getAddress(lon, lat){
+  axios.get('http://nominatim.openstreetmap.org/reverse',{
+    params: {
+      format: 'json',
+      lon: lon,
+      lat: lat
+    }
+  }).then((response) => {
+    address.value = response.data.display_name.split(", ").reverse().join(" ");
+    emit('send-address', address.value);
+  })
+
+}
 
 </script>
 
