@@ -15,7 +15,9 @@ import OSM from 'ol/source/OSM'; // OpenStreetMap 소스
 import { fromLonLat, toLonLat } from 'ol/proj.js'; // 좌표 변환
 import { defaults } from 'ol/control.js'
 import axios from "axios";
-import { emitter } from '../eventBus'; // Mitt 이벤트 버스
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 let olMap = null; //eslint-disable-line no-unused-vars
 let address = ref(null);
@@ -60,7 +62,7 @@ function getAddress(lon, lat){
     }
   }).then((response) => {
     address.value = response.data.display_name.split(", ").reverse().join(" ");
-    emitter.emit("sendAddress", address.value);
+    store.commit("setAddress", address.value);
   })
 
 }

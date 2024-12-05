@@ -13,8 +13,7 @@
           </div>
         </div>
         <div class="location-info-area">
-          <i class="fa-solid fa-location-dot"></i>
-          <input placeholder="위치 정보 직접 입력하기"/>
+          <input placeholder="위치 정보 직접 입력하기" :value="address"/>
         </div>
         <div class="rate-area">
           <StarRating v-model="userRating" :max-stars="5" @ratingData = "updateRating" />
@@ -40,17 +39,15 @@
 
 import VueResizable from 'vue-resizable';
 import StarRating from 'vue3-star-ratings';
-import {onMounted, ref} from "vue";
-import { emitter } from '../eventBus'; // Mitt 이벤트 버스
+import { computed, ref } from "vue";
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 let isVisibleSideBar = ref(true);
 let userRating = ref(0);
 
-onMounted(() => {
-  emitter.on("sendAddress", (addr) => {
-    console.log(addr);
-  });
-})
+const address = computed(() => store.state.address);
 
 function showSideBar() {
   isVisibleSideBar.value = !isVisibleSideBar.value;
@@ -106,6 +103,7 @@ function updateRating(newRating) {
       }
 
       > .location-info-area {
+        width: 300px;
         padding: 10px;
 
         input, input::placeholder, input:focus {
@@ -114,6 +112,7 @@ function updateRating(newRating) {
           box-shadow: none;
           background: none;
           border: none;
+          width: 450px;
         }
       }
 
