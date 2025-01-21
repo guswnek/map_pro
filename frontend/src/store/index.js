@@ -8,6 +8,7 @@ export default createStore({
     },
     getters: {
         getAddress(state){
+            console.log("123");
             return state.address;
         }
     },
