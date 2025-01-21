@@ -14,6 +14,7 @@ export default createStore({
     mutations: {
         setAddress(state, address){
             state.address = address;
+            console.log("1");
         }
     },
     actions: {
