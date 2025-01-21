@@ -17,6 +17,7 @@
     "core-js": "^3.8.3",
     "mitt": "^3.0.1",
     "ol": "^10.3.0",
+    "ol-geocoder": "^4.3.3",
     "vue": "^3.5.13",
     "vue-resizable": "^2.1.7",
     "vue3-star-ratings": "^3.0.5",

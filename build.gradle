@@ -57,7 +57,10 @@ dependencies {
    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-/*
+
+    // log4jdbc
+    implementation 'com.googlecode.log4jdbc:log4jdbc:1.2'
+
     // mybatis
     implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.3.2'
 
@@ -66,10 +69,7 @@ dependencies {
 
     // mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
-
-    // log4jdbc
-    implementation 'com.googlecode.log4jdbc:log4jdbc:1.2'
-
+/*
     // pageHelper
     implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '2.1.0'*/
 

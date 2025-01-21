@@ -1,11 +1,11 @@
 <template>
   <div class="side-bar-wrapper">
     <!-- active=['r']는 r => 오른쪽으로 resize화 되도록    -->
-    <VueResizable v-if="isVisibleSideBar" class ="resizable-side-bar" :width="500" :min-width="500" :max-width="Infinity" :active="['r']">
+    <VueResizable v-if="data.isVisibleSideBar" class ="resizable-side-bar" :width="500" :min-width="500" :max-width="Infinity" :active="['r']">
 
       <div class="side-bar">
         <div class="title-area">
-          <input placeholder="맛집 이름을 입력해주세요."/>
+          <input :value="data.title" placeholder="맛집 이름을 입력해주세요."/>
         </div>
         <div class="image-area">
           <div class="iw-file-input">
@@ -13,24 +13,28 @@
           </div>
         </div>
         <div class="location-info-area">
-          <input placeholder="위치 정보 직접 입력하기" :value="address"/>
+          <input placeholder="위치 정보 직접 입력하기" :value="data.address"/>
         </div>
         <div class="rate-area">
-          <StarRating v-model="userRating" :max-stars="5" @ratingData = "updateRating" />
-<!--          <p>Selected rating: {{ userRating }}</p>-->
+          <StarRating :value="data.grade" :max-stars="5" @ratingData = "updateRating" />
+<!--          <p>Selected rating: {{ grade }}</p>-->
         </div>
         <div class="review-area">
           <textarea
               ref="textarea"
               placeholder="후기를 입력해주세요."
               cols="57"
+              :value="data.review"
           />
+        </div>
+        <div class="bottom-btn-area">
+          <b-button class="save-btn">저장</b-button>
         </div>
       </div>
 
     </VueResizable>
     <button class="side-bar-active-btn" size="sm" @click="showSideBar">
-      {{ isVisibleSideBar ? '◀' : '▶' }}
+      {{ data.isVisibleSideBar ? '◀' : '▶' }}
     </button>
   </div>
 </template>
@@ -44,17 +48,22 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
-let isVisibleSideBar = ref(true);
-let userRating = ref(0);
+let data = ref({
+  isVisibleSideBar: true,
+  title: null,
+  grade: null,
+  review: null,
+  address: null,
+});
 
-const address = computed(() => store.state.address);
+data.value.address = computed(() => store.state.address);
 
 function showSideBar() {
-  isVisibleSideBar.value = !isVisibleSideBar.value;
+  data.value.isVisibleSideBar = !data.value.isVisibleSideBar;
 }
 
 function updateRating(newRating) {
-  userRating.value = newRating;
+  data.value.grade = newRating;
 }
 
 </script>
@@ -178,5 +187,17 @@ function updateRating(newRating) {
     width: 40px;
     height: 40px;
   }
+
+  > .bottom-btn-area {
+    text-align: right;
+    padding-right: 10px;
+
+    > .save-btn {
+      color: #fff;
+      font-weight: bold;
+      background-color: #ee9e06;
+    }
+  }
 }
+
 </style>

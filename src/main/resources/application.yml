@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: map_pro
+  datasource:
+    url: localhost:3306
+    username: user
+    password: user1234
+    driver-class-name: net.sf.log4jdbc.DriverSpy
+
+
+server:
+  port : 8081
+
+mybatis:
+  mapper-locations: classpath:mapper/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
