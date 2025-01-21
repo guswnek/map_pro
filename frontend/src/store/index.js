@@ -15,6 +15,7 @@ export default createStore({
         setAddress(state, address){
             state.address = address;
             console.log("1");
+            console.log("2");
         }
     },
     actions: {
