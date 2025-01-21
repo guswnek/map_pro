@@ -17,5 +17,6 @@ export default createStore({
         }
     },
     actions: {
+        console
     }
 });
